@@ -10,6 +10,7 @@ const buttonCancelForm = document.querySelector('.js-btn-cancel');
 const inputDesc = document.querySelector('.js-input-desc');
 const inputPhoto = document.querySelector('.js-input-photo');
 const inputName = document.querySelector('.js-input-name');
+const inputRace = document.querySelector('.js-input-race');
 const linkNewFormElememt = document.querySelector('.js-button-new-form');
 const labelMessageError = document.querySelector('.js-label-error');
 const input_search_desc = document.querySelector('.js_in_search_desc');
@@ -92,16 +93,32 @@ function addNewKitten(event) {
             labelMessageError.innerHTML = "";
         }
     }
+    //Crear nuevo objeto
+        const newKittenDataObject = {
+            image: inputPhoto.value,
+            name: inputName.value,
+            desc: inputDesc.value,
+            race: inputRace.value,
+        };
+    //Introducir datos en el objeto
+        kittenDataList.push(newKittenDataObject);
+    //Mensaje de confirmación de creación de nuevo objeto
+        labelMessageError.innerHTML = 'Mola! Un nuevo gatito en Adalab!';
+        renderKittenList(kittenDataList);
+    //Borrar los datos del objeto 
+        inputDesc.value = "";
+        inputPhoto.value = "";
+        inputName.value = "";
+        inputRace.value = "";
+    }
+    //Cancelar la búsqueda de un gatito
+    function cancelNewKitten(event) {
+        event.preventDefault();
+        newFormElement.classList.add("collapsed");
+        inputDesc.value = "";
+        inputPhoto.value = "";
+        inputName.value = "";
 }
-//Cancelar la búsqueda de un gatito
-function cancelNewKitten(event) {
-    event.preventDefault();
-    newFormElement.classList.add("collapsed");
-    inputDesc.value = "";
-    inputPhoto.value = "";
-    inputName.value = "";
-}
-
 //Filtrar por descripción
 function filterKitten(event) {
     event.preventDefault();
@@ -113,10 +130,8 @@ function filterKitten(event) {
         }
     }
 }
-
-//Mostrar el litado de gatitos en ell HTML
+//Mostrar el litado de gatitos en el HTML
 renderKittenList(kittenDataList);
-
 //Eventos
 linkNewFormElememt.addEventListener("click", handleClickNewCatForm);
 searchButton.addEventListener("click", filterKitten);
