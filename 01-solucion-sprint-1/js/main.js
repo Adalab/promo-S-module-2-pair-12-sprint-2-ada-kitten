@@ -104,7 +104,6 @@ function addNewKitten(event) {
         kittenDataList.push(newKittenDataObject);
     //Mensaje de confirmación de creación de nuevo objeto
         labelMessageError.innerHTML = 'Mola! Un nuevo gatito en Adalab!';
-        renderKittenList(kittenDataList);
     //Borrar los datos del objeto 
         inputDesc.value = "";
         inputPhoto.value = "";
