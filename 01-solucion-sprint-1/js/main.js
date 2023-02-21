@@ -43,18 +43,47 @@ const SERVER_URL = `https://dev.adalab.es/api/kittens/${GITHUB_USER}`;
 let kittenDataList = [];
 
 // Fetch para obtener el listado los gatitos
-fetch(SERVER_URL, {
+/* fetch(SERVER_URL, {
     method: 'GET',
-    headers: {'Content-Type': 'application/json'},
-  })
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (responseData){
-    console.log(responseData);
-    kittenDataList = responseData.results;
-    renderKittenList(kittenDataList);
-  })
+    headers: { 'Content-Type': 'application/json' },
+})
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (responseData) {
+        console.log(responseData);
+        kittenDataList = responseData.results;
+        renderKittenList(kittenDataList);
+    }) */
+
+
+// Crea una variable para almacenar los gatitos que se encuentren el local storage:
+const kittenListStored = JSON.parse(localStorage.getItem('kittensList'));
+
+// Modifica la petición al servidor que hiciste en la sesión anterior, para que solo se realice la petición cuando no hay gatitos en el local storage:
+if (kittenListStored) {
+    renderKittenList(kittenListStored);
+    kittenDataList = kittenListStored;
+} else {
+    fetch(SERVER_URL, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (responseData) {
+            console.log(responseData);
+            kittenDataList = responseData.results;
+            localStorage.setItem('kittensList', JSON.stringify(kittenDataList));
+            renderKittenList(kittenDataList);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+
 //Funciones
 function renderKitten(kittenData) {
     const kitten = `<li class="card">
@@ -118,8 +147,8 @@ function addNewKitten(event) {
     //Introducir datos en el objeto
     kittenDataList.push(newKittenDataObject);
     //Mensaje de confirmación de creación de nuevo objeto
-        labelMessageError.innerHTML = 'Mola! Un nuevo gatito en Adalab!';
-        renderKittenList(kittenDataList);
+    labelMessageError.innerHTML = 'Mola! Un nuevo gatito en Adalab!';
+    renderKittenList(kittenDataList);
     //Borrar los datos del objeto 
     inputDesc.value = "";
     inputPhoto.value = "";
@@ -155,7 +184,7 @@ function filterKitten(event) {
 }
 
 //Mostrar el litado de gatitos en el HTML
-renderKittenList(kittenDataList);
+//renderKittenList(kittenDataList);
 
 //Eventos
 linkNewFormElememt.addEventListener("click", handleClickNewCatForm);
