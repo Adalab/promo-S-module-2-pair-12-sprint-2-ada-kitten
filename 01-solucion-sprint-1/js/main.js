@@ -86,26 +86,63 @@ if (kittenListStored) {
 
 //Funciones
 function renderKitten(kittenData) {
-    const kitten = `<li class="card">
-    <article>
-      <img
-        class="card_img"
-        src=${kittenData.image}
-        alt="gatito"
-      />
-      <h3 class="card_title">${kittenData.name}</h3>
-      <h3 class="card_race">${kittenData.race}</h3>
-      <p class="card_description">
-      ${kittenData.desc}
-      </p>
-    </article>
-    </li>`;
+    // DOM avanzado crear elemento
+    const kitten = document.createElement('li');
+    kitten.setAttribute('class', 'card');
+    // listElement.appendChild(kitten);
+    
+    // DOM avanzado article
+    const articleKitten = document.createElement('article');
+    kitten.appendChild(articleKitten);
+
+    // DOM avanzado imagen
+    const imgKitten = document.createElement('img');
+    imgKitten.setAttribute('class', 'card_img');
+    imgKitten.setAttribute('src', kittenData.image);
+    imgKitten.setAttribute('alt', 'gatito');
+    articleKitten.appendChild(imgKitten);
+
+    // DOM avanzado h3
+    const cardTitle = document.createElement('h3');
+    const cardRace = document.createElement('h3');
+    cardTitle.setAttribute('class', 'card_title');
+    cardRace.setAttribute('class', 'card_race');
+    const textTitle = document.createTextNode(`${kittenData.name}`);
+    const textRace = document.createTextNode(`${kittenData.race}`);
+    cardTitle.appendChild(textTitle);
+    cardRace.appendChild(textRace);
+    articleKitten.appendChild(cardTitle);
+    articleKitten.appendChild(cardRace);
+
+    // DOM avanzado p
+    const cardDescription = document.createElement('p');
+    cardDescription.setAttribute('class', 'card_description');
+    const textDesc = document.createTextNode(`${kittenData.desc}`);
+    cardDescription.appendChild(textDesc);
+    articleKitten.appendChild(cardDescription);
+
+    // Código pasado a DOM posteriormente arriba
+    // <article>
+    //   <img
+    //     class="card_img"
+    //     src=${kittenData.image}
+    //     alt="gatito"
+    //   />
+    //   <h3 class="card_title">${kittenData.name}</h3>
+    //   <h3 class="card_race">${kittenData.race}</h3>
+    //   <p class="card_description">
+    //   ${kittenData.desc}
+    //   </p>
+    // </article>
+    // </li>`;
+    console.log(kitten);
     return kitten;
 }
 function renderKittenList(kittenDataList) {
     listElement.innerHTML = "";
     for (const kittenItem of kittenDataList) {
-        listElement.innerHTML += renderKitten(kittenItem);
+       // listElement.innerHTML += renderKitten(kittenItem);
+        listElement.appendChild(renderKitten(kittenItem));
     }
 }
 //Mostrar/ocultar el formulario
